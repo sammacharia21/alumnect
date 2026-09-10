@@ -1,0 +1,27 @@
+{
+  "name": "alumnect",
+  "version": "1.0.0",
+  "description": "Alumnect is a Next.js + Python ML platform that matches alumni and students for mentorship using semantic embeddings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^7.10.0",
+    "next": "^16.3.4",
+    "next-auth": "^4.24.15",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "prisma": "^8.0.0-rc.13",
+    "typescript": "^5.9.3"
+  }
+}

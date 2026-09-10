@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  ALUMNI
+  ADMIN
+}
+
+enum SessionStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      UserRole @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile Profile?
+
+  @@map("users")
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName  String
+  bio       String
+  skills    String[]
+  interests String[]
+  embedding Float[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matchesFrom Match[] @relation("MatchesFrom")
+  matchesTo   Match[] @relation("MatchesTo")
+
+  @@map("profiles")
+}
+
+model Match {
+  id               String   @id @default(cuid())
+  profileId        String
+  profile          Profile  @relation("MatchesFrom", fields: [profileId], references: [id], onDelete: Cascade)
+  matchedProfileId String
+  matchedProfile   Profile  @relation("MatchesTo", fields: [matchedProfileId], references: [id], onDelete: Cascade)
+  score            Float
+  approved         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  @@map("matches")
+}
+
+model MentorshipSession {
+  id          String        @id @default(cuid())
+  mentorId    String
+  menteeId    String
+  scheduledAt DateTime
+  status      SessionStatus @default(PENDING)
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("mentorship_sessions")
+}
