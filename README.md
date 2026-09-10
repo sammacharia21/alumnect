@@ -20,31 +20,4 @@ ml_engine/          Python embedding/preprocessing/evaluation scripts
 data/               Sample and validation datasets
 ```
 
-## Getting Started
 
-1. Install Node dependencies:
-   ```
-   npm install
-   ```
-2. Copy the environment template and fill in values:
-   ```
-   cp .env.example .env
-   ```
-3. Set up the database:
-   ```
-   npx prisma migrate dev
-   ```
-4. Run the dev server:
-   ```
-   npm run dev
-   ```
-
-## ML Engine
-
-Install Python dependencies in a virtual environment:
-
-```
-pip install -r requirements.txt
-```
-
-Scripts under `ml_engine/` handle text preprocessing, embedding generation, and recommendation evaluation metrics.
