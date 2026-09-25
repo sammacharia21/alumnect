@@ -1,1 +1,37 @@
-[]
+{
+  "aircraft_models": [
+    "B787",
+    "B737",
+    "B777",
+    "E190",
+    "A330",
+    "A320",
+    "Q400"
+  ],
+  "regulatory_and_licensing": [
+    "ICAO",
+    "KCAA",
+    "FAA",
+    "EASA",
+    "ATPL",
+    "CPL",
+    "PPL",
+    "IR",
+    "MEP"
+  ],
+  "technical_and_operational": [
+    "ETOPS",
+    "SMS",
+    "FMC",
+    "TCAS",
+    "NDB",
+    "VOR",
+    "ILS",
+    "APU",
+    "LINE_MAINTENANCE",
+    "BASE_MAINTENANCE",
+    "AVIONICS",
+    "FDM",
+    "MCC"
+  ]
+}

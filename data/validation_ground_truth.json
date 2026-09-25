@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "test_id": "PAIR_VAL_01",
+    "category": "Flight Operations - Type Conversion",
+    "mentee_bio": "Commercial First Officer on regional jet equipment preparing for narrow-body B737 line conversion. Seeking guidance on standard instrument departures, simulator checks, and command upgrade pathways.",
+    "mentor_bio": "Experienced B737 Fleet Captain and Type Rating Instructor (TRI). Dedicated to mentorship around line-oriented flight training (LOFT), simulator evaluations, and standard operating procedures (SOPs) under KCAA/ICAO regulations.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "PAIR_VAL_02",
+    "category": "Flight Operations - Wide-Body Transition",
+    "mentee_bio": "Junior First Officer flying E190 fleet with 1,500 flight hours. Eager to master cockpit automation, FMC database programming, and line training workflows from experienced wide-body captains.",
+    "mentor_bio": "Senior Line Captain on the B787 Dreamliner fleet with over 12,000 hours of commercial operations. Specializing in long-haul route navigation, command preparation, and cockpit resource management (CRM).",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "PAIR_VAL_03",
+    "category": "Engineering - Avionics & Instruments",
+    "mentee_bio": "Graduate avionics engineering trainee seeking practical knowledge in electrical flight instrument diagnosis, line maintenance checks, and digital bus troubleshooting.",
+    "mentor_bio": "Senior Avionics Maintenance Specialist focusing on digital flight control computers, radar navigation arrays, and automated landing instruments. Experienced in mentoring apprentice technicians through troubleshooting methodologies.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "PAIR_VAL_04",
+    "category": "Engineering - Powerplant Diagnostics",
+    "mentee_bio": "Apprentice aircraft technician working toward KCAA Part 66 certification. Wanting mentorship in gas turbine powerplant teardown, borescope inspections, and defect logging.",
+    "mentor_bio": "Lead Aircraft Maintenance Engineer with 15 years overseeing base maintenance on modern commercial jetliners. Specialized in GEnx and CFM56 engine diagnostics, scheduled A/C checks, and regulatory airworthiness compliance.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "PAIR_VAL_05",
+    "category": "Corporate Operations - Dispatch & Planning",
+    "mentee_bio": "Junior flight operations officer trainee looking to understand dynamic flight plan recalculation, tactical weather avoidance, and payload calculation.",
+    "mentor_bio": "Senior Flight Dispatcher and Operations Control Manager with comprehensive experience in fuel tankering optimization, international overflight permit clearances, and flight dispatch release procedures under ICAO Annex 6.",
+    "expected_compatible": true
+  }
+]
