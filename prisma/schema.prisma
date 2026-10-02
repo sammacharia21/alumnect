@@ -1,78 +1,72 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  STUDENT
-  ALUMNI
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  MENTOR
+  MENTEE
   ADMIN
 }
 
-enum SessionStatus {
+enum RequestStatus {
   PENDING
-  CONFIRMED
-  COMPLETED
-  CANCELLED
+  APPROVED
+  REJECTED
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  role      UserRole @default(STUDENT)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  role          Role      @default(MENTEE)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  profile Profile?
+  profile          Profile?
+  sentRequests     MentorshipRequest[] @relation("MenteeRequests")
+  receivedRequests MentorshipRequest[] @relation("MentorRequests")
 
   @@map("users")
 }
 
 model Profile {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  fullName  String
-  bio       String
-  skills    String[]
-  interests String[]
-  embedding Float[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName         String
+  department       String
+  jobTitle         String
+  yearsExperience  Int      @default(0)
+  certifications   String   @default("")
+  rawBio           String   @db.Text
+  cleanedBio       String   @default("") @db.Text
+  
+  // Dense 384-dimensional vector from all-MiniLM-L6-v2
+  embedding        Unsupported("vector(384)")?
 
-  matchesFrom Match[] @relation("MatchesFrom")
-  matchesTo   Match[] @relation("MatchesTo")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@map("profiles")
 }
 
-model Match {
-  id               String   @id @default(cuid())
-  profileId        String
-  profile          Profile  @relation("MatchesFrom", fields: [profileId], references: [id], onDelete: Cascade)
-  matchedProfileId String
-  matchedProfile   Profile  @relation("MatchesTo", fields: [matchedProfileId], references: [id], onDelete: Cascade)
-  score            Float
-  approved         Boolean  @default(false)
-  createdAt        DateTime @default(now())
+model MentorshipRequest {
+  id              String        @id @default(uuid())
+  menteeId        String
+  mentorId        String
+  similarityScore Float         @default(0.0)
+  status          RequestStatus @default(PENDING)
+  notes           String?       @db.Text
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
-  @@map("matches")
-}
+  mentee          User          @relation("MenteeRequests", fields: [menteeId], references: [id], onDelete: Cascade)
+  mentor          User          @relation("MentorRequests", fields: [mentorId], references: [id], onDelete: Cascade)
 
-model MentorshipSession {
-  id          String        @id @default(cuid())
-  mentorId    String
-  menteeId    String
-  scheduledAt DateTime
-  status      SessionStatus @default(PENDING)
-  notes       String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  @@map("mentorship_sessions")
+  @@map("mentorship_requests")
 }

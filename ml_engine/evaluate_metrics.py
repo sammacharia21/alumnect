@@ -81,4 +81,4 @@ def run_evaluation(threshold: float = 0.55):
     print("===================================================")
 
 if __name__ == "__main__":
-    run_evaluation(threshold=0.55)
+    run_evaluation(threshold=0.45)

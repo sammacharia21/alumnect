@@ -1,37 +1,170 @@
 [
   {
-    "test_id": "PAIR_VAL_01",
-    "category": "Flight Operations - Type Conversion",
-    "mentee_bio": "Commercial First Officer on regional jet equipment preparing for narrow-body B737 line conversion. Seeking guidance on standard instrument departures, simulator checks, and command upgrade pathways.",
-    "mentor_bio": "Experienced B737 Fleet Captain and Type Rating Instructor (TRI). Dedicated to mentorship around line-oriented flight training (LOFT), simulator evaluations, and standard operating procedures (SOPs) under KCAA/ICAO regulations.",
+    "test_id": "VAL_POS_01",
+    "category": "Flight Operations - Type Rating Transition",
+    "mentee_bio": "Junior First Officer operating regional turboprop fleet, accumulating flight hours and aiming for conversion to Boeing 737 multi-engine commercial operations.",
+    "mentor_bio": "Line Captain and certified flight instructor on Boeing 737 fleet specializing in type conversion training, standard operating procedures, and cockpit crew management.",
     "expected_compatible": true
   },
   {
-    "test_id": "PAIR_VAL_02",
-    "category": "Flight Operations - Wide-Body Transition",
-    "mentee_bio": "Junior First Officer flying E190 fleet with 1,500 flight hours. Eager to master cockpit automation, FMC database programming, and line training workflows from experienced wide-body captains.",
-    "mentor_bio": "Senior Line Captain on the B787 Dreamliner fleet with over 12,000 hours of commercial operations. Specializing in long-haul route navigation, command preparation, and cockpit resource management (CRM).",
+    "test_id": "VAL_POS_02",
+    "category": "Flight Operations - Wide-Body Long-Haul Transition",
+    "mentee_bio": "First Officer with 2,500 total flight hours seeking mentorship for transitioning from narrow-body short-haul routes to B787 international long-haul flight operations.",
+    "mentor_bio": "Senior Long-Haul B787 Captain experienced in international extended-range operations, ETOPS procedures, oceanic track clearances, and cruise relief management.",
     "expected_compatible": true
   },
   {
-    "test_id": "PAIR_VAL_03",
-    "category": "Engineering - Avionics & Instruments",
-    "mentee_bio": "Graduate avionics engineering trainee seeking practical knowledge in electrical flight instrument diagnosis, line maintenance checks, and digital bus troubleshooting.",
-    "mentor_bio": "Senior Avionics Maintenance Specialist focusing on digital flight control computers, radar navigation arrays, and automated landing instruments. Experienced in mentoring apprentice technicians through troubleshooting methodologies.",
+    "test_id": "VAL_POS_03",
+    "category": "Engineering - Avionics & Glass Cockpit",
+    "mentee_bio": "Graduate apprentice engineer seeking guidance on troubleshooting flight management computers, glass cockpit display systems, and ARINC digital communication buses.",
+    "mentor_bio": "Licensed Aircraft Maintenance Engineer (Avionics) specializing in digital flight control computers, modern navigation systems, and instrument bus diagnostics.",
     "expected_compatible": true
   },
   {
-    "test_id": "PAIR_VAL_04",
-    "category": "Engineering - Powerplant Diagnostics",
-    "mentee_bio": "Apprentice aircraft technician working toward KCAA Part 66 certification. Wanting mentorship in gas turbine powerplant teardown, borescope inspections, and defect logging.",
-    "mentor_bio": "Lead Aircraft Maintenance Engineer with 15 years overseeing base maintenance on modern commercial jetliners. Specialized in GEnx and CFM56 engine diagnostics, scheduled A/C checks, and regulatory airworthiness compliance.",
+    "test_id": "VAL_POS_04",
+    "category": "Engineering - Gas Turbine Powerplants",
+    "mentee_bio": "Junior maintenance technician focusing on aircraft engine borescope inspections, hot section assessments, and gas turbine compressor diagnostics.",
+    "mentor_bio": "Lead Powerplant Maintenance Engineer with extensive background in jet engine overhauls, high-pressure turbine inspections, and vibration diagnostic data analysis.",
     "expected_compatible": true
   },
   {
-    "test_id": "PAIR_VAL_05",
-    "category": "Corporate Operations - Dispatch & Planning",
-    "mentee_bio": "Junior flight operations officer trainee looking to understand dynamic flight plan recalculation, tactical weather avoidance, and payload calculation.",
-    "mentor_bio": "Senior Flight Dispatcher and Operations Control Manager with comprehensive experience in fuel tankering optimization, international overflight permit clearances, and flight dispatch release procedures under ICAO Annex 6.",
+    "test_id": "VAL_POS_05",
+    "category": "Corporate Ops - Flight Dispatch & Route Planning",
+    "mentee_bio": "Operations trainee preparing for Flight Dispatcher license certification, learning flight planning software, NOTAM assessments, and route fuel calculation models.",
+    "mentor_bio": "Senior Flight Dispatcher overseeing integrated network operations, route fuel economy optimization, alternate aerodrome selection, and severe weather avoidance.",
     "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_06",
+    "category": "Corporate Ops - Crew Scheduling & Rostering",
+    "mentee_bio": "Crew coordinator seeking advice on fatigue risk management systems, airline crew rostering software, and flight time limitation compliance.",
+    "mentor_bio": "Rostering and Crew Resource Planning Manager specializing in legal duty time constraints, monthly pairing optimization, and crew bidding systems.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_07",
+    "category": "Flight Operations - Simulator & IFR Proficiency",
+    "mentee_bio": "Cadet pilot preparing for airline transition assessment, instrument rating renewal, and complex multi-crew cockpit simulator evaluations.",
+    "mentor_bio": "Authorized Flight Examiner and Type Rating Instructor conducting multi-crew cooperation courses, full-flight simulator sessions, and standard checks.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_08",
+    "category": "Engineering - Airframe & Structural Repair",
+    "mentee_bio": "Trainee mechanic working on heavy airframe structural C-checks, composite laminate patching, and pressurized fuselage riveting repairs.",
+    "mentor_bio": "Lead Airframe Structural Engineer licensed in major sheet metal restorations, composite skin repairs, corrosion prevention, and airworthiness directives.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_09",
+    "category": "Corporate Ops - Cargo & Load Control",
+    "mentee_bio": "Airside load controller learning aircraft weight and balance trim sheets, dangerous goods segregation rules, and cargo hold loading sequencing.",
+    "mentor_bio": "Air Cargo Operations Superintendent specializing in automated load planning systems, dangerous goods ICAO compliance, and aircraft center of gravity control.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_10",
+    "category": "Flight Operations - Airline Transport Command",
+    "mentee_bio": "Senior First Officer preparing for Command Upgrade Board, studying leadership decision-making models, non-normal checklist management, and command authority.",
+    "mentor_bio": "Fleet Training Captain mentoring prospective commanders in command decision-making, threat and error management, and regulatory captain responsibilities.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_11",
+    "category": "Engineering - Reliability & Quality Assurance",
+    "mentee_bio": "Junior technical records assistant wanting to transition into fleet reliability engineering, component tracking, and airworthiness safety compliance.",
+    "mentor_bio": "Quality Assurance & Continuing Airworthiness Manager responsible for fleet maintenance compliance audits, reliability monitoring, and regulatory reporting.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_POS_12",
+    "category": "Corporate Ops - Safety Management Systems (SMS)",
+    "mentee_bio": "Airline safety intern learning incident reporting pipelines, safety hazard identification, and risk mitigation methodologies across flight operations.",
+    "mentor_bio": "Aviation Safety Officer directing corporate Safety Management Systems, internal occurrence investigations, root cause analyses, and flight data monitoring.",
+    "expected_compatible": true
+  },
+  {
+    "test_id": "VAL_NEG_01",
+    "category": "Mismatch - Flight Operations vs Gas Turbine Overhaul",
+    "mentee_bio": "Junior First Officer operating regional turboprop fleet, accumulating flight hours and aiming for conversion to Boeing 737 multi-engine commercial operations.",
+    "mentor_bio": "Lead Powerplant Maintenance Engineer with extensive background in jet engine overhauls, high-pressure turbine inspections, and vibration diagnostic data analysis.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_02",
+    "category": "Mismatch - Avionics Engineering vs Crew Rostering",
+    "mentee_bio": "Graduate apprentice engineer seeking guidance on troubleshooting flight management computers, glass cockpit display systems, and ARINC digital communication buses.",
+    "mentor_bio": "Rostering and Crew Resource Planning Manager specializing in legal duty time constraints, monthly pairing optimization, and crew bidding systems.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_03",
+    "category": "Mismatch - Flight Dispatch vs Heavy Airframe Structures",
+    "mentee_bio": "Operations trainee preparing for Flight Dispatcher license certification, learning flight planning software, NOTAM assessments, and route fuel calculation models.",
+    "mentor_bio": "Lead Airframe Structural Engineer licensed in major sheet metal restorations, composite skin repairs, corrosion prevention, and airworthiness directives.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_04",
+    "category": "Mismatch - Cadet Pilot vs Cargo Load Control",
+    "mentee_bio": "Cadet pilot preparing for airline transition assessment, instrument rating renewal, and complex multi-crew cockpit simulator evaluations.",
+    "mentor_bio": "Air Cargo Operations Superintendent specializing in automated load planning systems, dangerous goods ICAO compliance, and aircraft center of gravity control.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_05",
+    "category": "Mismatch - Airframe Mechanic vs Simulator Captain",
+    "mentee_bio": "Trainee mechanic working on heavy airframe structural C-checks, composite laminate patching, and pressurized fuselage riveting repairs.",
+    "mentor_bio": "Authorized Flight Examiner and Type Rating Instructor conducting multi-crew cooperation courses, full-flight simulator sessions, and standard checks.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_06",
+    "category": "Mismatch - Corporate Safety vs Line Avionics",
+    "mentee_bio": "Airline safety intern learning incident reporting pipelines, safety hazard identification, and risk mitigation methodologies across flight operations.",
+    "mentor_bio": "Licensed Aircraft Maintenance Engineer (Avionics) specializing in digital flight control computers, modern navigation systems, and instrument bus diagnostics.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_07",
+    "category": "Mismatch - Long-Haul Transition vs Flight Dispatch",
+    "mentee_bio": "First Officer with 2,500 total flight hours seeking mentorship for transitioning from narrow-body short-haul routes to B787 international long-haul flight operations.",
+    "mentor_bio": "Senior Flight Dispatcher overseeing integrated network operations, route fuel economy optimization, alternate aerodrome selection, and severe weather avoidance.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_08",
+    "category": "Mismatch - Engine Technician vs Command Upgrade Captain",
+    "mentee_bio": "Junior maintenance technician focusing on aircraft engine borescope inspections, hot section assessments, and gas turbine compressor diagnostics.",
+    "mentor_bio": "Fleet Training Captain mentoring prospective commanders in command decision-making, threat and error management, and regulatory captain responsibilities.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_09",
+    "category": "Mismatch - Crew Coordinator vs Boeing 737 Captain",
+    "mentee_bio": "Crew coordinator seeking advice on fatigue risk management systems, airline crew rostering software, and flight time limitation compliance.",
+    "mentor_bio": "Line Captain and certified flight instructor on Boeing 737 fleet specializing in type conversion training, standard operating procedures, and cockpit crew management.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_10",
+    "category": "Mismatch - Cargo Load Master vs Long-Haul Captain",
+    "mentee_bio": "Airside load controller learning aircraft weight and balance trim sheets, dangerous goods segregation rules, and cargo hold loading sequencing.",
+    "mentor_bio": "Senior Long-Haul B787 Captain experienced in international extended-range operations, ETOPS procedures, oceanic track clearances, and cruise relief management.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_11",
+    "category": "Mismatch - Command Trainee Pilot vs Fleet Quality Auditor",
+    "mentee_bio": "Senior First Officer preparing for Command Upgrade Board, studying leadership decision-making models, non-normal checklist management, and command authority.",
+    "mentor_bio": "Quality Assurance & Continuing Airworthiness Manager responsible for fleet maintenance compliance audits, reliability monitoring, and regulatory reporting.",
+    "expected_compatible": false
+  },
+  {
+    "test_id": "VAL_NEG_12",
+    "category": "Mismatch - Records Assistant vs Air Safety Investigator",
+    "mentee_bio": "Junior technical records assistant wanting to transition into fleet reliability engineering, component tracking, and airworthiness safety compliance.",
+    "mentor_bio": "Aviation Safety Officer directing corporate Safety Management Systems, internal occurrence investigations, root cause analyses, and flight data monitoring.",
+    "expected_compatible": false
   }
 ]
