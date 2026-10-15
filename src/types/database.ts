@@ -1,8 +1,10 @@
+import type { Role, RequestStatus } from "./index";
+
 export interface UserRecord {
   id: string;
   email: string;
-  name: string | null;
-  role: "STUDENT" | "ALUMNI" | "ADMIN";
+  passwordHash: string;
+  role: Role;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -11,30 +13,36 @@ export interface ProfileRecord {
   id: string;
   userId: string;
   fullName: string;
-  bio: string;
-  skills: string[];
-  interests: string[];
-  embedding: number[] | null;
+  department: string;
+  jobTitle: string;
+  yearsExperience: number;
+  certifications: string;
+  rawBio: string;
+  cleanedBio: string;
+  embedding?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface MatchRecord {
+export interface MentorshipRequestRecordDB {
   id: string;
-  profileId: string;
-  matchedProfileId: string;
-  score: number;
-  approved: boolean;
-  createdAt: Date;
-}
-
-export interface SessionRecord {
-  id: string;
-  mentorId: string;
   menteeId: string;
-  scheduledAt: Date;
-  status: "PENDING" | "CONFIRMED" | "COMPLETED" | "CANCELLED";
+  mentorId: string;
+  similarityScore: number;
+  status: RequestStatus;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface MentorCandidateQueryResult {
+  id: string;
+  userId: string;
+  fullName: string;
+  department: string;
+  jobTitle: string;
+  yearsExperience: number;
+  certifications: string;
+  rawBio: string;
+  similarity: number;
 }

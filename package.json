@@ -4,13 +4,20 @@
   "description": "Alumnect is a Next.js + Python ML platform that matches alumni and students for mentorship using semantic embeddings.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "ml:server": "python -u ml_engine/server.py",
+    "ml:seed": "python -u ml_engine/seed_database.py",
+    "ml:verify": "python -u ml_engine/verify_vector_query.py"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "next": "^16.3.4",
     "next-auth": "^4.24.15",
     "react": "^19.3.0",
@@ -18,6 +25,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^6.19.3",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.20.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

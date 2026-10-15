@@ -13,15 +13,21 @@ except ImportError:
     raise ImportError("sentence-transformers is not installed. Run: pip install sentence-transformers")
 
 class SBERTEmbedder:
-    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", verbose: bool = False):
         """
         Initializes the pre-trained Sentence-BERT model and the domain preprocessor.
         The all-MiniLM-L6-v2 model generates 384-dimensional normalized vector embeddings.
         """
-        print(f"Loading Sentence-BERT model: {model_name}...")
-        self.model = SentenceTransformer(model_name)
+        if verbose:
+            print(f"Loading Sentence-BERT model: {model_name}...", file=sys.stderr)
+        
+        import gc
+        gc.collect()
+        
+        self.model = SentenceTransformer(model_name, device="cpu")
         self.processor = AviationTextProcessor()
-        print("Model loaded successfully.")
+        if verbose:
+            print("Model loaded successfully.", file=sys.stderr)
 
     def embed_text(self, text: str) -> List[float]:
         """
