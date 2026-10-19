@@ -74,7 +74,7 @@ export default function AdminDashboardPage() {
             {loading ? "..." : `${Math.round((stats?.avgScore || 0.65) * 100)}%`}
           </div>
           <div style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
-            Validated Threshold $\ge$ 0.45
+            Validated Operational Threshold ≥ 0.45 (Cosine Similarity)
           </div>
         </div>
       </div>

@@ -10,19 +10,28 @@ export async function GET(
   try {
     const session = getSessionFromRequest(request) || (await getCurrentUser());
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId") || session?.id;
-    const role = searchParams.get("role") || (session?.role === "MENTOR" ? "mentor" : session?.role === "MENTEE" ? "mentee" : null);
+    const requestedUserId = searchParams.get("userId");
+    const requestedRole = searchParams.get("role");
     const status = searchParams.get("status") as RequestStatus | null;
 
     const where: any = {};
+    const isAdmin = session?.role === "ADMIN";
 
-    if (userId) {
-      if (role === "mentee") {
-        where.menteeId = userId;
-      } else if (role === "mentor") {
-        where.mentorId = userId;
+    if (requestedUserId) {
+      if (requestedRole === "mentee") {
+        where.menteeId = requestedUserId;
+      } else if (requestedRole === "mentor") {
+        where.mentorId = requestedUserId;
       } else {
-        where.OR = [{ menteeId: userId }, { mentorId: userId }];
+        where.OR = [{ menteeId: requestedUserId }, { mentorId: requestedUserId }];
+      }
+    } else if (!isAdmin && session?.id) {
+      if (session.role === "MENTEE") {
+        where.menteeId = session.id;
+      } else if (session.role === "MENTOR") {
+        where.mentorId = session.id;
+      } else {
+        where.OR = [{ menteeId: session.id }, { mentorId: session.id }];
       }
     }
 
