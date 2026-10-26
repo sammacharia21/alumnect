@@ -140,9 +140,9 @@ export default function MenteeExplorePage() {
     <div>
       {/* Header */}
       <div className="page-header" style={{ marginBottom: "1.5rem" }}>
-        <h1 className="page-title">Semantic Mentor Discovery</h1>
+        <h1 className="page-title">Discover Aviation Mentors</h1>
         <p className="page-subtitle">
-          AI matching calculates cosine similarity between your aviation goals and certified airline mentors.
+          Find and connect with experienced Kenya Airways airline mentors aligned with your career goals.
         </p>
       </div>
 
@@ -244,8 +244,8 @@ export default function MenteeExplorePage() {
 
           <div style={{ flex: 1, minWidth: "180px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.78rem", fontWeight: 700, marginBottom: "0.25rem" }}>
-              <span>THRESHOLD:</span>
-              <span style={{ color: "var(--color-primary)" }}>{threshold.toFixed(2)} (Baseline: 0.45)</span>
+              <span>MATCH CONFIDENCE:</span>
+              <span style={{ color: "var(--color-primary)" }}>{Math.round(threshold * 100)}% (Recommended: 45%)</span>
             </div>
             <input
               type="range"

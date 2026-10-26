@@ -96,10 +96,10 @@ export default function MentorOverviewPage() {
             Profile Status
           </div>
           <div style={{ fontSize: "1.4rem", fontWeight: 800, color: "#8b5cf6", marginTop: "0.5rem" }}>
-            Active (384-D)
+            Active & Verified
           </div>
           <div style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
-            Indexed in pgvector
+            Available for matching
           </div>
         </div>
       </div>

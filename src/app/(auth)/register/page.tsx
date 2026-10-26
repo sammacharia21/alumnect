@@ -12,10 +12,26 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const passwordValidation = {
+    hasMinLength: password.length >= 8,
+    hasUpper: /[A-Z]/.test(password),
+    hasLower: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSpecial: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+  };
+
+  const isPasswordValid = Object.values(passwordValidation).every(Boolean);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setErrorMsg("");
+
+    if (!isPasswordValid) {
+      setErrorMsg("Please satisfy all password security requirements before proceeding.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const res = await fetch("/api/auth/register", {
@@ -128,8 +144,8 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Minimum 6 characters"
-              minLength={6}
+              placeholder="At least 8 characters with letters, numbers, symbols"
+              minLength={8}
               style={{
                 width: "100%",
                 padding: "0.65rem 0.85rem",
@@ -137,6 +153,36 @@ export default function RegisterPage() {
                 border: "1px solid var(--color-border)",
               }}
             />
+
+            {/* Password Requirements Checklist */}
+            <div
+              style={{
+                marginTop: "0.5rem",
+                padding: "0.6rem 0.75rem",
+                background: "#f8fafc",
+                borderRadius: "var(--radius-sm)",
+                fontSize: "0.76rem",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.35rem",
+              }}
+            >
+              <div style={{ color: passwordValidation.hasMinLength ? "#16a34a" : "#64748b" }}>
+                {passwordValidation.hasMinLength ? "✓" : "○"} At least 8 characters
+              </div>
+              <div style={{ color: passwordValidation.hasUpper ? "#16a34a" : "#64748b" }}>
+                {passwordValidation.hasUpper ? "✓" : "○"} Uppercase letter (A-Z)
+              </div>
+              <div style={{ color: passwordValidation.hasLower ? "#16a34a" : "#64748b" }}>
+                {passwordValidation.hasLower ? "✓" : "○"} Lowercase letter (a-z)
+              </div>
+              <div style={{ color: passwordValidation.hasNumber ? "#16a34a" : "#64748b" }}>
+                {passwordValidation.hasNumber ? "✓" : "○"} Number (0-9)
+              </div>
+              <div style={{ color: passwordValidation.hasSpecial ? "#16a34a" : "#64748b", gridColumn: "span 2" }}>
+                {passwordValidation.hasSpecial ? "✓" : "○"} Special character (!@#$%^&*...)
+              </div>
+            </div>
           </div>
 
           <button

@@ -84,13 +84,13 @@ export default function OnboardingPage() {
               textTransform: "uppercase",
             }}
           >
-            Mandatory Onboarding Gate
+            Profile Setup
           </div>
           <h1 style={{ fontSize: "1.85rem", fontWeight: 800, color: "var(--color-navy)" }}>
             Complete Your Aviation Profile
           </h1>
           <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", marginTop: "0.35rem", lineHeight: 1.5 }}>
-            To enable semantic AI matching, your narrative bio is converted into a 384-dimensional dense SBERT vector embedding stored in PostgreSQL.
+            Provide your professional background, ratings, and career goals to enable intelligent mentorship matching across the Kenya Airways alumni network.
           </p>
         </div>
 
@@ -214,11 +214,12 @@ export default function OnboardingPage() {
 
           <div style={{ marginBottom: "1.75rem" }}>
             <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.35rem" }}>
-              Aviation Bio & Mentorship Goals (Vectorized via SBERT) *
+              Aviation Background & Mentorship Objectives *
             </label>
             <textarea
               rows={5}
               required
+              minLength={40}
               value={rawBio}
               onChange={(e) => setRawBio(e.target.value)}
               placeholder="Describe your flight hours, aircraft types flown or maintained, career roadmap, and specific guidance you are seeking or offering..."
@@ -231,7 +232,7 @@ export default function OnboardingPage() {
               }}
             />
             <span style={{ fontSize: "0.78rem", color: "var(--color-text-light)", display: "block", marginTop: "0.35rem" }}>
-              Protected tokens like ICAO, FAA, B787, ATPL, and ETOPS are automatically preserved by the preprocessor.
+              Detail your fleet experience, licenses (e.g. CPL, ATPL, EASA), or operational goals for accurate compatibility matching (minimum 40 characters).
             </span>
           </div>
 
@@ -241,7 +242,7 @@ export default function OnboardingPage() {
             disabled={loading}
             style={{ width: "100%", padding: "0.85rem", fontSize: "1rem" }}
           >
-            {loading ? "⚙️ Generating 384-D Vector & Creating Profile..." : "✓ Complete Profile & Enter Platform"}
+            {loading ? "Saving Profile & Analyzing Matches..." : "Complete Profile & Enter Platform"}
           </button>
         </form>
       </div>

@@ -155,7 +155,7 @@ export default function AdminReviewPage() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--color-border)", paddingBottom: "0.85rem", marginBottom: "1rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                     <span className="score-pill score-high">
-                      ★ {matchScore}% Cosine Match
+                      ★ {matchScore}% Match
                     </span>
                     <span className={`badge ${statusClass}`}>{item.status}</span>
                   </div>

@@ -55,7 +55,7 @@ export default function MentorProfilePage() {
 
       const data = await res.json();
       if (data.success) {
-        setFeedback("Mentor credentials and 384-dimensional vector embedding updated in pgvector!");
+        setFeedback("Mentor credentials and profile updated successfully!");
       } else {
         setFeedback(data.error || "Failed to update profile.");
       }
@@ -71,7 +71,7 @@ export default function MentorProfilePage() {
       <div className="page-header" style={{ marginBottom: "1.5rem" }}>
         <h1 className="page-title">Mentor Credentials & Availability</h1>
         <p className="page-subtitle">
-          Updating your narrative bio automatically re-indexes your 384-dimensional dense vector in PostgreSQL so student matching remains accurate.
+          Updating your narrative bio keeps your aviation experience up-to-date so matching recommendations remain accurate.
         </p>
       </div>
 
@@ -83,8 +83,8 @@ export default function MentorProfilePage() {
               borderRadius: "var(--radius-sm)",
               marginBottom: "1.25rem",
               fontSize: "0.9rem",
-              background: feedback.includes("vector") ? "var(--color-success-bg)" : "var(--color-danger-bg)",
-              color: feedback.includes("vector") ? "var(--color-success)" : "var(--color-danger)",
+              background: feedback.includes("successfully") ? "var(--color-success-bg)" : "var(--color-danger-bg)",
+              color: feedback.includes("successfully") ? "var(--color-success)" : "var(--color-danger)",
             }}
           >
             {feedback}
@@ -219,7 +219,7 @@ export default function MentorProfilePage() {
             disabled={saving}
             style={{ width: "100%", padding: "0.75rem" }}
           >
-            {saving ? "Updating & Re-indexing in pgvector..." : "💾 Update Mentor Profile & Vector"}
+            {saving ? "Saving Changes..." : "💾 Update Mentor Profile"}
           </button>
         </form>
       </div>

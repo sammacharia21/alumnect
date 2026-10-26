@@ -113,7 +113,7 @@ export default function AdminRequestsPage() {
                 {/* Header */}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--color-border)", paddingBottom: "0.75rem", marginBottom: "1rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                    <span className="score-pill score-high">★ {scorePct}% Cosine Match</span>
+                    <span className="score-pill score-high">★ {scorePct}% Match</span>
                     <span className={`badge ${statusClass}`}>{req.status}</span>
                   </div>
                   <span style={{ fontSize: "0.8rem", color: "var(--color-text-light)" }}>

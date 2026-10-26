@@ -44,9 +44,11 @@ export default function Navbar() {
   return (
     <header className="app-header">
       <div className="header-container">
-        <Link href="/" className="brand">
-          <span>✈️ Alumnect</span>
-          <span className="brand-badge">SBERT pgvector</span>
+        <Link href="/" className="brand" style={{ textDecoration: "none" }}>
+          <span style={{ fontWeight: 800, letterSpacing: "-0.02em" }}>Alumnect</span>
+          <span className="brand-badge" style={{ textTransform: "uppercase", fontSize: "0.68rem" }}>
+            Aviation Network
+          </span>
         </Link>
 
         <nav className="nav-links" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -66,30 +68,6 @@ export default function Navbar() {
               >
                 Join Platform
               </Link>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  fontSize: "0.8rem",
-                  color: "#10b981",
-                  fontWeight: 600,
-                  background: "#ecfdf5",
-                  padding: "0.3rem 0.65rem",
-                  borderRadius: "9999px",
-                }}
-              >
-                <span
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: "#10b981",
-                    display: "inline-block",
-                  }}
-                ></span>
-                498 Vectors Live
-              </div>
             </>
           )}
 
@@ -127,7 +105,7 @@ export default function Navbar() {
                     borderRadius: "9999px",
                   }}
                 >
-                  🎓 {user.profile?.fullName || user.email.split("@")[0]}
+                  {user.profile?.fullName || user.email.split("@")[0]} (Mentee)
                 </span>
                 <button
                   onClick={handleLogout}
@@ -174,7 +152,7 @@ export default function Navbar() {
                     borderRadius: "9999px",
                   }}
                 >
-                  ✈️ {user.profile?.fullName || user.email.split("@")[0]}
+                  {user.profile?.fullName || user.email.split("@")[0]} (Mentor)
                 </span>
                 <button
                   onClick={handleLogout}
@@ -227,7 +205,7 @@ export default function Navbar() {
                     borderRadius: "9999px",
                   }}
                 >
-                  🛡️ Administrator
+                  Administrator
                 </span>
                 <button
                   onClick={handleLogout}

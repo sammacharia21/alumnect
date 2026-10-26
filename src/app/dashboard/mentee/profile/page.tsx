@@ -55,7 +55,7 @@ export default function MenteeProfilePage() {
 
       const data = await res.json();
       if (data.success) {
-        setFeedback("Profile and 384-dimensional SBERT embedding updated successfully!");
+        setFeedback("Profile updated successfully!");
       } else {
         setFeedback(data.error || "Failed to update profile.");
       }
@@ -216,7 +216,7 @@ export default function MenteeProfilePage() {
             disabled={saving}
             style={{ width: "100%", padding: "0.75rem" }}
           >
-            {saving ? "Updating & Re-computing 384-D Vector..." : "💾 Save Profile & Update Vector Embedding"}
+            {saving ? "Saving Profile..." : "💾 Save Profile Changes"}
           </button>
         </form>
       </div>

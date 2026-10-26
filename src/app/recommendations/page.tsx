@@ -128,13 +128,13 @@ export default function RecommendationsPage() {
             textTransform: "uppercase",
           }}
         >
-          Vector Search Explorer
+          Mentorship Discovery
         </div>
         <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "var(--color-navy)", lineHeight: 1.2 }}>
           Aviation Mentorship Matching Engine
         </h1>
         <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", marginTop: "0.35rem" }}>
-          Test real-time Sentence-BERT embeddings paired with PostgreSQL pgvector dense vector retrieval (384 dimensions).
+          Find compatible Kenya Airways mentors based on your operational background, fleet ratings, and career goals.
         </p>
       </div>
 
@@ -214,9 +214,9 @@ export default function RecommendationsPage() {
 
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.35rem" }}>
-              <span>Similarity Threshold:</span>
+              <span>Minimum Match Confidence:</span>
               <span style={{ color: "var(--color-primary)", fontWeight: 700 }}>
-                {threshold.toFixed(2)} (Baseline: 0.45)
+                {Math.round(threshold * 100)}% (Recommended: 45%)
               </span>
             </div>
             <input
@@ -297,10 +297,10 @@ export default function RecommendationsPage() {
           <div className="card" style={{ textAlign: "center", padding: "4rem 2rem" }}>
             <div style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>✈️</div>
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-navy)" }}>
-              Computing Dense SBERT Vector Embeddings...
+              Analyzing Aviation Profiles...
             </h3>
             <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
-              Evaluating cosine similarity across 498 indexed aviation mentors in PostgreSQL.
+              Matching your inquiry across verified aviation mentors in Kenya Airways.
             </p>
           </div>
         ) : !hasSearched ? (
@@ -323,10 +323,10 @@ export default function RecommendationsPage() {
         ) : matches.length === 0 ? (
           <div className="card" style={{ textAlign: "center", padding: "3rem" }}>
             <p style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--color-text-muted)" }}>
-              No mentors met the selected similarity threshold ({threshold.toFixed(2)}).
+              No mentors met the selected match confidence threshold ({Math.round(threshold * 100)}%).
             </p>
             <p style={{ fontSize: "0.85rem", color: "var(--color-text-light)", marginTop: "0.25rem" }}>
-              Try lowering the threshold slider to 0.45 or broadening your query text.
+              Try lowering the match confidence slider to 45% or broadening your inquiry.
             </p>
           </div>
         ) : (

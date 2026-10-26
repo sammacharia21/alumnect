@@ -34,7 +34,7 @@ export default function HomePage() {
               textTransform: "uppercase",
             }}
           >
-            <span>✈️ Sentence-BERT + pgvector (384-D)</span>
+            <span>Kenya Airways Alumni Network</span>
           </div>
 
           <h1
@@ -46,7 +46,7 @@ export default function HomePage() {
               marginBottom: "1.25rem",
             }}
           >
-            Aviation Mentorship Powered by Semantic AI
+            Aviation Mentorship & Knowledge Transfer Platform
           </h1>
 
           <p
@@ -57,9 +57,8 @@ export default function HomePage() {
               marginBottom: "2rem",
             }}
           >
-            Alumnect bridges aviation students and junior first officers with senior airline captains,
-            licensed aircraft maintenance engineers, and dispatch operations specialists using dense vector
-            embeddings and human-in-the-loop review.
+            Alumnect connects aviation students and junior first officers with experienced airline captains,
+            licensed aircraft maintenance engineers, and flight operations specialists through intelligent profile compatibility matching.
           </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
@@ -67,19 +66,19 @@ export default function HomePage() {
               href="/register"
               className="btn btn-primary"
               style={{
-                fontSize: "1.05rem",
+                fontSize: "1rem",
                 padding: "0.75rem 1.75rem",
                 borderRadius: "var(--radius-md)",
                 boxShadow: "0 4px 14px rgba(2, 132, 199, 0.4)",
               }}
             >
-              🚀 Get Started / Register
+              Get Started
             </Link>
             <Link
               href="/login"
               className="btn btn-secondary"
               style={{
-                fontSize: "1.05rem",
+                fontSize: "1rem",
                 padding: "0.75rem 1.5rem",
                 borderRadius: "var(--radius-md)",
                 background: "rgba(255, 255, 255, 0.12)",
@@ -87,21 +86,21 @@ export default function HomePage() {
                 border: "1px solid rgba(255, 255, 255, 0.25)",
               }}
             >
-              🔑 Sign In
+              Sign In
             </Link>
             <Link
               href="/recommendations"
               className="btn btn-secondary"
               style={{
-                fontSize: "1.05rem",
+                fontSize: "1rem",
                 padding: "0.75rem 1.5rem",
                 borderRadius: "var(--radius-md)",
                 background: "transparent",
-                color: "#94a3b8",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
+                color: "#cbd5e1",
+                border: "1px solid rgba(255, 255, 255, 0.25)",
               }}
             >
-              ⚡ Explore Vector Search
+              Explore Mentors
             </Link>
           </div>
         </div>
@@ -110,37 +109,34 @@ export default function HomePage() {
       {/* Architecture Highlights */}
       <section style={{ marginBottom: "3rem" }}>
         <h2 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--color-navy)", marginBottom: "1.25rem" }}>
-          Engine Specifications & Validated Metrics
+          Platform Capabilities & Validated Benchmarks
         </h2>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem" }}>
           <div className="card">
-            <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>🎯</div>
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.35rem", color: "var(--color-navy)" }}>
-              0.45 Operational Threshold
+              High-Recall Matching
             </h3>
             <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", lineHeight: 1.5 }}>
-              Tuned and validated on ground-truth benchmark pairs, achieving an F1-score of 0.88 with 91.7% Recall and 84.6% Precision.
+              Tuned on domain benchmark pairs to achieve a validated 91.7% Recall and 84.6% Precision, ensuring viable mentors are identified across fleets.
             </p>
           </div>
 
           <div className="card">
-            <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>🧠</div>
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.35rem", color: "var(--color-navy)" }}>
-              Aviation Domain SBERT
+              Aviation Context Analysis
             </h3>
             <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", lineHeight: 1.5 }}>
-              Powered by <code style={{ color: "var(--color-primary)", fontWeight: 600 }}>all-MiniLM-L6-v2</code> with protected token preprocessors for ICAO, FAA, B787, ATPL, and ETOPS acronyms.
+              Understands nuanced airline terminology, type ratings (e.g. B787, B737, E190), and regulatory standards (ICAO, FAA, EASA) beyond simple keyword matching.
             </p>
           </div>
 
           <div className="card">
-            <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>⚡</div>
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.35rem", color: "var(--color-navy)" }}>
-              PostgreSQL + pgvector
+              Institutional Knowledge Transfer
             </h3>
             <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", lineHeight: 1.5 }}>
-              498 dense mentor embeddings indexed in PostgreSQL container with real-time cosine distance operator (<code style={{ color: "var(--color-primary)", fontWeight: 600 }}>&lt;=&gt;</code>).
+              Bridges departing aviation professionals with emerging talent to preserve operational expertise and foster structured career advancement.
             </p>
           </div>
         </div>

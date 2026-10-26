@@ -137,7 +137,7 @@ export default function MentorRequestsPage() {
                   </div>
 
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <span className="score-pill score-high">★ {matchScore}% Cosine Match</span>
+                    <span className="score-pill score-high">★ {matchScore}% Match</span>
                     <span className={`badge ${statusClass}`}>{req.status}</span>
                   </div>
                 </div>

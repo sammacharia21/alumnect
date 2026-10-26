@@ -15,6 +15,30 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       );
     }
 
+    // Strong password policy validation
+    const passwordMinLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+    if (
+      password.length < passwordMinLength ||
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+        },
+        { status: 400 }
+      );
+    }
+
     const normalizedEmail = email.trim().toLowerCase();
     const existing = await prisma.user.findUnique({
       where: { email: normalizedEmail },
