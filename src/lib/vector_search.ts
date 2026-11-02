@@ -6,6 +6,25 @@ import type { MentorMatch } from "@/types";
 export const DEFAULT_OPERATIONAL_THRESHOLD = 0.45;
 export const DEFAULT_MATCH_LIMIT = 10;
 
+let mlServerSpawned = false;
+
+function ensureMlServerRunning(serverUrl: string) {
+  if (mlServerSpawned || (!serverUrl.includes("127.0.0.1") && !serverUrl.includes("localhost"))) {
+    return;
+  }
+  mlServerSpawned = true;
+  try {
+    const serverScript = path.resolve(process.cwd(), "ml_engine", "server.py");
+    const child = spawn("python", ["-u", serverScript], {
+      detached: true,
+      stdio: "ignore",
+    });
+    child.unref();
+  } catch (err) {
+    console.warn("Could not auto-start ML server:", err);
+  }
+}
+
 /**
  * Generates a 384-dimensional dense SBERT embedding for input text.
  * Checks for the live Python microservice first, then gracefully falls back
@@ -22,7 +41,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
   // 1. Try fast in-memory HTTP microservice
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), 1500);
 
     const response = await fetch(`${mlServerUrl}/embed`, {
       method: "POST",
@@ -39,7 +58,8 @@ export async function generateEmbedding(text: string): Promise<number[]> {
       }
     }
   } catch {
-    // Microservice unavailable; fallback to Python CLI bridge below
+    // Microservice unavailable; trigger auto-start in background so future queries are instant (30ms)
+    ensureMlServerRunning(mlServerUrl);
   }
 
   // 2. Fallback to child_process Python CLI bridge

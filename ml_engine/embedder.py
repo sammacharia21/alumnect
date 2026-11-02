@@ -24,7 +24,14 @@ class SBERTEmbedder:
         import gc
         gc.collect()
         
-        self.model = SentenceTransformer(model_name, device="cpu")
+        # Prioritize local offline cached model to avoid 30s HuggingFace network retry delays
+        os.environ["HF_HUB_OFFLINE"] = "1"
+        try:
+            self.model = SentenceTransformer(model_name, device="cpu", local_files_only=True)
+        except Exception:
+            os.environ.pop("HF_HUB_OFFLINE", None)
+            self.model = SentenceTransformer(model_name, device="cpu")
+
         self.processor = AviationTextProcessor()
         if verbose:
             print("Model loaded successfully.", file=sys.stderr)

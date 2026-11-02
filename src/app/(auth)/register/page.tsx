@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -11,6 +12,23 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [activeSession, setActiveSession] = useState<any>(null);
+
+  React.useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data) {
+          setActiveSession(data.data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setActiveSession(null);
+  };
 
   const passwordValidation = {
     hasMinLength: password.length >= 8,
@@ -63,6 +81,45 @@ export default function RegisterPage() {
             Select your aviation pathway and create your account
           </p>
         </div>
+
+        {activeSession && (
+          <div
+            style={{
+              padding: "0.85rem",
+              background: "#eff6ff",
+              border: "1px solid #bfdbfe",
+              borderRadius: "var(--radius-sm)",
+              marginBottom: "1.25rem",
+              fontSize: "0.85rem",
+              color: "#1e40af",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <strong>Currently signed in:</strong>
+              <div style={{ fontSize: "0.8rem", color: "#3b82f6" }}>{activeSession.email} ({activeSession.role})</div>
+            </div>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <Link
+                href={activeSession.role === "ADMIN" ? "/admin/dashboard" : activeSession.role === "MENTOR" ? "/dashboard/mentor" : "/dashboard/mentee"}
+                className="btn btn-primary"
+                style={{ padding: "0.3rem 0.65rem", fontSize: "0.78rem" }}
+              >
+                Dashboard →
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="btn btn-secondary"
+                style={{ padding: "0.3rem 0.65rem", fontSize: "0.78rem" }}
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
 
         {errorMsg && (
           <div
@@ -194,6 +251,18 @@ export default function RegisterPage() {
             {loading ? "Creating Account..." : "Create Account & Continue to Onboarding →"}
           </button>
         </form>
+
+        <div style={{ display: "flex", alignItems: "center", margin: "1.5rem 0 1.25rem", color: "var(--color-text-muted)", fontSize: "0.82rem" }}>
+          <div style={{ flex: 1, height: "1px", background: "var(--color-border)" }} />
+          <span style={{ padding: "0 0.75rem", textTransform: "uppercase", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.05em" }}>
+            or continue with
+          </span>
+          <div style={{ flex: 1, height: "1px", background: "var(--color-border)" }} />
+        </div>
+
+        <div style={{ marginBottom: "1.25rem" }}>
+          <GoogleSignInButton role={role} text={`Continue with Google (${role === "MENTOR" ? "Mentor" : "Mentee"})`} />
+        </div>
 
         <div style={{ marginTop: "1.5rem", textAlign: "center", fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
           Already have an account?{" "}

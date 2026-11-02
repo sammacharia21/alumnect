@@ -39,21 +39,7 @@ export function proxy(request: NextRequest) {
   const isAdminRoute = pathname.startsWith("/admin");
   const isProtectedDashboard = isMenteeRoute || isMentorRoute || isAdminRoute;
 
-  // 1. If already logged in and visiting /login or /register, redirect to dashboard or onboarding
-  if (isAuthRoute && session) {
-    if (!session.profileId && session.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/onboarding", request.url));
-    }
-    if (session.role === "ADMIN") {
-      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    }
-    if (session.role === "MENTOR") {
-      return NextResponse.redirect(new URL("/dashboard/mentor", request.url));
-    }
-    return NextResponse.redirect(new URL("/dashboard/mentee", request.url));
-  }
-
-  // 2. Unauthenticated user trying to access protected routes
+  // 1. Unauthenticated user trying to access protected routes
   if ((isProtectedDashboard || isOnboardingRoute) && !session) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("from", pathname);

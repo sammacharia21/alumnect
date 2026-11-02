@@ -40,22 +40,17 @@ export default function RecommendationsPage() {
   // Modal for connect / sign-in prompt
   const [selectedMentor, setSelectedMentor] = useState<MentorMatch | null>(null);
 
-  // Auto-redirect authenticated mentees to their personalized dashboard
+  // Check authenticated user state (without forced hijacking)
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.data) {
           setCurrentUser(data.data);
-          if (data.data.role === "MENTEE") {
-            router.push("/dashboard/mentee");
-          } else if (data.data.role === "MENTOR") {
-            router.push("/dashboard/mentor");
-          }
         }
       })
       .catch(() => {});
-  }, [router]);
+  }, []);
 
   // Listen for Escape key to close modal
   useEffect(() => {

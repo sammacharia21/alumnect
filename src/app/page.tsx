@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { getCurrentUser } from "@/lib/auth";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const user = await getCurrentUser();
   return (
     <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
       {/* Hero Section */}
@@ -62,46 +64,79 @@ export default function HomePage() {
           </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-            <Link
-              href="/register"
-              className="btn btn-primary"
-              style={{
-                fontSize: "1rem",
-                padding: "0.75rem 1.75rem",
-                borderRadius: "var(--radius-md)",
-                boxShadow: "0 4px 14px rgba(2, 132, 199, 0.4)",
-              }}
-            >
-              Get Started
-            </Link>
-            <Link
-              href="/login"
-              className="btn btn-secondary"
-              style={{
-                fontSize: "1rem",
-                padding: "0.75rem 1.5rem",
-                borderRadius: "var(--radius-md)",
-                background: "rgba(255, 255, 255, 0.12)",
-                color: "white",
-                border: "1px solid rgba(255, 255, 255, 0.25)",
-              }}
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/recommendations"
-              className="btn btn-secondary"
-              style={{
-                fontSize: "1rem",
-                padding: "0.75rem 1.5rem",
-                borderRadius: "var(--radius-md)",
-                background: "transparent",
-                color: "#cbd5e1",
-                border: "1px solid rgba(255, 255, 255, 0.25)",
-              }}
-            >
-              Explore Mentors
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  href={user.role === "ADMIN" ? "/admin/dashboard" : user.role === "MENTOR" ? "/dashboard/mentor" : "/dashboard/mentee"}
+                  className="btn btn-primary"
+                  style={{
+                    fontSize: "1rem",
+                    padding: "0.75rem 1.75rem",
+                    borderRadius: "var(--radius-md)",
+                    boxShadow: "0 4px 14px rgba(2, 132, 199, 0.4)",
+                  }}
+                >
+                  Go to My Dashboard →
+                </Link>
+                <Link
+                  href="/recommendations"
+                  className="btn btn-secondary"
+                  style={{
+                    fontSize: "1rem",
+                    padding: "0.75rem 1.5rem",
+                    borderRadius: "var(--radius-md)",
+                    background: "rgba(255, 255, 255, 0.12)",
+                    color: "white",
+                    border: "1px solid rgba(255, 255, 255, 0.25)",
+                  }}
+                >
+                  Explore Mentors
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                  className="btn btn-primary"
+                  style={{
+                    fontSize: "1rem",
+                    padding: "0.75rem 1.75rem",
+                    borderRadius: "var(--radius-md)",
+                    boxShadow: "0 4px 14px rgba(2, 132, 199, 0.4)",
+                  }}
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="/login"
+                  className="btn btn-secondary"
+                  style={{
+                    fontSize: "1rem",
+                    padding: "0.75rem 1.5rem",
+                    borderRadius: "var(--radius-md)",
+                    background: "rgba(255, 255, 255, 0.12)",
+                    color: "white",
+                    border: "1px solid rgba(255, 255, 255, 0.25)",
+                  }}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/recommendations"
+                  className="btn btn-secondary"
+                  style={{
+                    fontSize: "1rem",
+                    padding: "0.75rem 1.5rem",
+                    borderRadius: "var(--radius-md)",
+                    background: "transparent",
+                    color: "#cbd5e1",
+                    border: "1px solid rgba(255, 255, 255, 0.25)",
+                  }}
+                >
+                  Explore Mentors
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>

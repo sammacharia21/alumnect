@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -10,6 +11,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [activeSession, setActiveSession] = useState<any>(null);
+
+  React.useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data) {
+          setActiveSession(data.data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setActiveSession(null);
+  };
 
   const handleLogin = async (e: React.FormEvent, overrideEmail?: string, overridePass?: string) => {
     if (e) e.preventDefault();
@@ -55,6 +73,45 @@ export default function LoginPage() {
             Sign in to access your role-based aviation dashboard
           </p>
         </div>
+
+        {activeSession && (
+          <div
+            style={{
+              padding: "0.85rem",
+              background: "#eff6ff",
+              border: "1px solid #bfdbfe",
+              borderRadius: "var(--radius-sm)",
+              marginBottom: "1.25rem",
+              fontSize: "0.85rem",
+              color: "#1e40af",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <strong>Currently signed in:</strong>
+              <div style={{ fontSize: "0.8rem", color: "#3b82f6" }}>{activeSession.email} ({activeSession.role})</div>
+            </div>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <Link
+                href={activeSession.role === "ADMIN" ? "/admin/dashboard" : activeSession.role === "MENTOR" ? "/dashboard/mentor" : "/dashboard/mentee"}
+                className="btn btn-primary"
+                style={{ padding: "0.3rem 0.65rem", fontSize: "0.78rem" }}
+              >
+                Go to Dashboard →
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="btn btn-secondary"
+                style={{ padding: "0.3rem 0.65rem", fontSize: "0.78rem" }}
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
 
         {errorMsg && (
           <div
@@ -119,6 +176,18 @@ export default function LoginPage() {
             {loading ? "Authenticating..." : "Sign In"}
           </button>
         </form>
+
+        <div style={{ display: "flex", alignItems: "center", margin: "1.5rem 0 1.25rem", color: "var(--color-text-muted)", fontSize: "0.82rem" }}>
+          <div style={{ flex: 1, height: "1px", background: "var(--color-border)" }} />
+          <span style={{ padding: "0 0.75rem", textTransform: "uppercase", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.05em" }}>
+            or continue with
+          </span>
+          <div style={{ flex: 1, height: "1px", background: "var(--color-border)" }} />
+        </div>
+
+        <div style={{ marginBottom: "1.25rem" }}>
+          <GoogleSignInButton text="Sign in with Google" />
+        </div>
 
         {/* Quick Demo Access Buttons */}
         <div style={{ marginTop: "1.5rem", borderTop: "1px solid var(--color-border)", paddingTop: "1.25rem" }}>

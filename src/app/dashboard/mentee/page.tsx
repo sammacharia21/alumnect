@@ -26,6 +26,7 @@ export default function MenteeExplorePage() {
   const [limit, setLimit] = useState(10);
 
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const [matches, setMatches] = useState<MentorMatch[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -52,21 +53,19 @@ export default function MenteeExplorePage() {
               }
             });
 
-          // Run initial search using mentee's stored bio or default query
+          // Pre-fill query with user's bio if available, but do NOT run search automatically
           const initialBio = data.data.profile?.rawBio || SUGGESTED_QUERIES[0];
           setQueryText(initialBio);
-          runSemanticSearch(initialBio);
-        } else {
-          runSemanticSearch(SUGGESTED_QUERIES[0]);
         }
       })
-      .catch(() => runSemanticSearch(SUGGESTED_QUERIES[0]));
+      .catch(() => {});
   }, []);
 
   const runSemanticSearch = async (textToSearch?: string) => {
     const query = (textToSearch ?? queryText).trim();
     if (!query) return;
 
+    setHasSearched(true);
     setLoading(true);
     setErrorMessage("");
 
@@ -270,21 +269,60 @@ export default function MenteeExplorePage() {
         </div>
       </div>
 
-      {/* Results Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-        <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--color-navy)" }}>
-          Recommended Aviation Mentors
-        </h3>
-        <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-          Found {matches.length} mentors (Similarity ≥ {threshold.toFixed(2)})
-        </span>
-      </div>
-
       {errorMessage && (
         <div style={{ background: "var(--color-danger-bg)", color: "var(--color-danger)", padding: "1rem", borderRadius: "var(--radius-sm)", marginBottom: "1.5rem" }}>
           {errorMessage}
         </div>
       )}
+
+      {!hasSearched ? (
+        <div className="card" style={{ textAlign: "center", padding: "3rem 1.5rem", background: "#f8fafc" }}>
+          <div style={{ fontSize: "2.2rem", marginBottom: "0.75rem" }}>✈️</div>
+          <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--color-navy)", marginBottom: "0.4rem" }}>
+            Ready to Discover Aviation Mentors?
+          </h3>
+          <p style={{ fontSize: "0.9rem", color: "var(--color-text-muted)", maxWidth: "520px", margin: "0 auto 1.25rem", lineHeight: 1.5 }}>
+            Review or customize your learning inquiry above, then click <strong>⚡ Search Mentors</strong> to find matching Kenya Airways captains, engineers, and specialists.
+          </p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => runSemanticSearch()}
+            style={{ padding: "0.65rem 1.5rem", fontSize: "0.95rem" }}
+          >
+            Find Recommended Mentors →
+          </button>
+        </div>
+      ) : loading ? (
+        <div className="card" style={{ textAlign: "center", padding: "3.5rem 1.5rem" }}>
+          <div style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>🧭</div>
+          <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-navy)" }}>
+            Searching Verified Mentors...
+          </h3>
+          <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
+            Evaluating Kenya Airways mentor profiles against your learning inquiry.
+          </p>
+        </div>
+      ) : matches.length === 0 ? (
+        <div className="card" style={{ textAlign: "center", padding: "3rem 1.5rem" }}>
+          <p style={{ fontSize: "1rem", fontWeight: 600, color: "var(--color-text-muted)" }}>
+            No mentors met your minimum match confidence criteria ({Math.round(threshold * 100)}%).
+          </p>
+          <p style={{ fontSize: "0.85rem", color: "var(--color-text-light)", marginTop: "0.35rem" }}>
+            Try lowering the match confidence slider to 45% or broadening your inquiry text.
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Results Header */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+            <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--color-navy)" }}>
+              Recommended Aviation Mentors
+            </h3>
+            <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
+              Found {matches.length} mentors (Confidence ≥ {Math.round(threshold * 100)}%)
+            </span>
+          </div>
 
       {/* Mentor Cards Grid */}
       <div className="grid-2">
@@ -363,6 +401,8 @@ export default function MenteeExplorePage() {
           );
         })}
       </div>
+      </>
+      )}
 
       {/* Mentorship Request Modal */}
       {modalMentor && (
