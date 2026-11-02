@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import type { MentorshipRequestRecord } from "@/types";
+import ApprovedMentorshipCard from "@/components/ApprovedMentorshipCard";
 
 export default function MenteeRequestsPage() {
   const [requests, setRequests] = useState<MentorshipRequestRecord[]>([]);
@@ -109,6 +110,17 @@ export default function MenteeRequestsPage() {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           {currentList.map((req) => {
+            if (req.status === "APPROVED") {
+              return (
+                <ApprovedMentorshipCard
+                  key={req.id}
+                  request={req}
+                  currentRole="MENTEE"
+                  onUpdated={loadRequests}
+                />
+              );
+            }
+
             const matchScore = Math.round(req.similarityScore * 100);
             return (
               <div key={req.id} className="card" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -126,11 +138,7 @@ export default function MenteeRequestsPage() {
                     <span className="score-pill score-high">★ {matchScore}% Match</span>
                     <span
                       className={`badge ${
-                        req.status === "APPROVED"
-                          ? "badge-approved"
-                          : req.status === "REJECTED"
-                          ? "badge-rejected"
-                          : "badge-pending"
+                        req.status === "REJECTED" ? "badge-rejected" : "badge-pending"
                       }`}
                     >
                       {req.status}
@@ -145,27 +153,6 @@ export default function MenteeRequestsPage() {
                       YOUR INTRODUCTION MESSAGE:
                     </span>
                     <p style={{ fontSize: "0.88rem", color: "var(--color-text)" }}>"{req.notes}"</p>
-                  </div>
-                )}
-
-                {/* Approved state: Mentor contact info */}
-                {req.status === "APPROVED" && (
-                  <div style={{ background: "#ecfdf5", border: "1px solid #a7f3d0", padding: "0.75rem 1rem", borderRadius: "var(--radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div>
-                      <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#065f46" }}>
-                        MENTOR CONTACT DETAILS:
-                      </div>
-                      <div style={{ fontSize: "0.92rem", fontWeight: 600, color: "#047857" }}>
-                        📧 {req.mentor?.email}
-                      </div>
-                    </div>
-                    <a
-                      href={`mailto:${req.mentor?.email}?subject=Alumnect Mentorship Follow-up`}
-                      className="btn btn-success"
-                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.85rem" }}
-                    >
-                      ✉️ Send Email
-                    </a>
                   </div>
                 )}
 

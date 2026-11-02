@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import type { MentorshipRequestRecord } from "@/types";
+import ApprovedMentorshipCard from "@/components/ApprovedMentorshipCard";
 
 export default function MentorRequestsPage() {
   const [requests, setRequests] = useState<MentorshipRequestRecord[]>([]);
@@ -115,13 +116,20 @@ export default function MentorRequestsPage() {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           {filteredRequests.map((req) => {
+            if (req.status === "APPROVED") {
+              return (
+                <ApprovedMentorshipCard
+                  key={req.id}
+                  request={req}
+                  currentRole="MENTOR"
+                  onUpdated={loadRequests}
+                />
+              );
+            }
+
             const matchScore = Math.round(req.similarityScore * 100);
             const statusClass =
-              req.status === "APPROVED"
-                ? "badge-approved"
-                : req.status === "REJECTED"
-                ? "badge-rejected"
-                : "badge-pending";
+              req.status === "REJECTED" ? "badge-rejected" : "badge-pending";
 
             return (
               <div key={req.id} className="card">
@@ -161,18 +169,6 @@ export default function MentorRequestsPage() {
                     {req.mentee?.profile?.rawBio || "No bio provided."}
                   </p>
                 </div>
-
-                {/* Approved State: Mentee Contact Details */}
-                {req.status === "APPROVED" && (
-                  <div style={{ background: "#ecfdf5", border: "1px solid #a7f3d0", padding: "0.75rem 1rem", borderRadius: "var(--radius-sm)", marginBottom: "1rem" }}>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#065f46", display: "block" }}>
-                      CONNECTED MENTEE CONTACT:
-                    </span>
-                    <span style={{ fontSize: "0.92rem", fontWeight: 600, color: "#047857" }}>
-                      📧 {req.mentee?.email}
-                    </span>
-                  </div>
-                )}
 
                 {/* Action Controls for Pending Inquiries */}
                 {req.status === "PENDING" && (

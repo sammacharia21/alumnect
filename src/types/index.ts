@@ -38,6 +38,21 @@ export interface MentorMatch {
   compatibilityPercentage: number;
 }
 
+export interface SessionLogItem {
+  id: string;
+  authorName: string;
+  authorRole: Role;
+  text: string;
+  createdAt: string;
+}
+
+export interface MentorshipSessionData {
+  intro?: string;
+  meetingLink?: string;
+  scheduledAt?: string;
+  logs: SessionLogItem[];
+}
+
 export interface MentorshipRequestRecord {
   id: string;
   menteeId: string;
@@ -47,6 +62,7 @@ export interface MentorshipRequestRecord {
   notes?: string | null;
   createdAt: string;
   updatedAt: string;
+  sessionData?: MentorshipSessionData;
   mentee?: {
     id: string;
     email: string;

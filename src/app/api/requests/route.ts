@@ -1,8 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getCurrentUser, getSessionFromRequest } from "@/lib/auth";
-import type { ApiResponse, MentorshipRequestRecord } from "@/types";
+import type { ApiResponse, MentorshipRequestRecord, MentorshipSessionData, Role } from "@/types";
 import { RequestStatus } from "@prisma/client";
+
+function parseSessionData(rawNotes?: string | null): MentorshipSessionData {
+  if (!rawNotes) {
+    return { intro: "", logs: [] };
+  }
+  try {
+    const parsed = JSON.parse(rawNotes);
+    if (typeof parsed === "object" && parsed !== null) {
+      return {
+        intro: parsed.intro || "",
+        meetingLink: parsed.meetingLink || "",
+        scheduledAt: parsed.scheduledAt || "",
+        logs: Array.isArray(parsed.logs) ? parsed.logs : [],
+      };
+    }
+  } catch {}
+  return {
+    intro: rawNotes,
+    logs: [],
+  };
+}
 
 export async function GET(
   request: NextRequest
@@ -69,6 +90,7 @@ export async function GET(
       similarityScore: r.similarityScore,
       status: r.status,
       notes: r.notes,
+      sessionData: parseSessionData(r.notes),
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
       mentee: {
@@ -203,35 +225,89 @@ export async function PATCH(
   request: NextRequest
 ): Promise<NextResponse<ApiResponse>> {
   try {
+    const session = getSessionFromRequest(request) || (await getCurrentUser());
     const body = await request.json();
-    const { requestId, status, notes } = body;
+    const { requestId, status, notes, meetingLink, scheduledAt, newLogNote } = body;
 
-    if (!requestId || !status) {
+    if (!requestId) {
       return NextResponse.json(
-        { success: false, error: "requestId and status are required." },
+        { success: false, error: "requestId is required." },
         { status: 400 }
       );
     }
 
-    if (!["PENDING", "APPROVED", "REJECTED"].includes(status)) {
+    if (status && !["PENDING", "APPROVED", "REJECTED"].includes(status)) {
       return NextResponse.json(
         { success: false, error: "status must be PENDING, APPROVED, or REJECTED." },
         { status: 400 }
       );
     }
 
+    const existing = await prisma.mentorshipRequest.findUnique({
+      where: { id: requestId },
+      include: {
+        mentee: { select: { email: true, profile: { select: { fullName: true } } } },
+        mentor: { select: { email: true, profile: { select: { fullName: true } } } },
+      },
+    });
+
+    if (!existing) {
+      return NextResponse.json(
+        { success: false, error: "Mentorship request not found." },
+        { status: 404 }
+      );
+    }
+
+    // Parse current session data
+    const sessionData = parseSessionData(existing.notes);
+
+    if (meetingLink !== undefined) {
+      sessionData.meetingLink = meetingLink.trim();
+    }
+    if (scheduledAt !== undefined) {
+      sessionData.scheduledAt = scheduledAt;
+    }
+    if (notes !== undefined && !meetingLink && !scheduledAt && !newLogNote) {
+      sessionData.intro = notes;
+    }
+
+    if (newLogNote && typeof newLogNote === "string" && newLogNote.trim()) {
+      const authorRole: Role = (session?.role as Role) || "MENTEE";
+      const authorName =
+        session?.fullName ||
+        (authorRole === "MENTOR"
+          ? existing.mentor.profile?.fullName || "Mentor"
+          : existing.mentee.profile?.fullName || "Mentee");
+
+      sessionData.logs.push({
+        id: crypto.randomUUID(),
+        authorName,
+        authorRole,
+        text: newLogNote.trim(),
+        createdAt: new Date().toISOString(),
+      });
+    }
+
     const updated = await prisma.mentorshipRequest.update({
       where: { id: requestId },
       data: {
-        status: status as RequestStatus,
-        ...(notes !== undefined ? { notes } : {}),
+        ...(status ? { status: status as RequestStatus } : {}),
+        notes: JSON.stringify(sessionData),
+      },
+      include: {
+        mentee: { select: { id: true, email: true, profile: true } },
+        mentor: { select: { id: true, email: true, profile: true } },
       },
     });
 
     return NextResponse.json({
       success: true,
-      message: `Mentorship request marked as ${status}.`,
-      data: updated,
+      message: `Mentorship request updated successfully.`,
+      data: {
+        id: updated.id,
+        status: updated.status,
+        sessionData: parseSessionData(updated.notes),
+      },
     });
   } catch (error) {
     console.error("[API_REQUESTS_PATCH_ERROR]", error);
