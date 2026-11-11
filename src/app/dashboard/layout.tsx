@@ -215,45 +215,6 @@ export default function DashboardLayout({
                 </Link>
               </>
             )}
-
-            {/* Quick Role Switcher for paired testing */}
-            <div style={{ marginTop: "1rem", paddingTop: "0.85rem", borderTop: "1px solid var(--color-border)" }}>
-              <span style={{ fontSize: "0.72rem", color: "var(--color-text-light)", display: "block", marginBottom: "0.4rem", fontWeight: 700 }}>
-                ROLE VIEW SWITCHER:
-              </span>
-              <div style={{ display: "flex", gap: "0.35rem" }}>
-                <Link
-                  href="/dashboard/mentee"
-                  style={{
-                    flex: 1,
-                    textAlign: "center",
-                    fontSize: "0.75rem",
-                    padding: "0.3rem",
-                    borderRadius: "var(--radius-sm)",
-                    background: !isMentor ? "var(--color-primary-light)" : "#f1f5f9",
-                    color: !isMentor ? "var(--color-primary)" : "var(--color-text-muted)",
-                    fontWeight: 700,
-                  }}
-                >
-                  Mentee
-                </Link>
-                <Link
-                  href="/dashboard/mentor"
-                  style={{
-                    flex: 1,
-                    textAlign: "center",
-                    fontSize: "0.75rem",
-                    padding: "0.3rem",
-                    borderRadius: "var(--radius-sm)",
-                    background: isMentor ? "#fef3c7" : "#f1f5f9",
-                    color: isMentor ? "#b45309" : "var(--color-text-muted)",
-                    fontWeight: 700,
-                  }}
-                >
-                  Mentor
-                </Link>
-              </div>
-            </div>
           </nav>
         </div>
 

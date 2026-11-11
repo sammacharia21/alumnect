@@ -19,7 +19,7 @@ const DEPARTMENTS = [
 
 export default function MenteeExplorePage() {
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [queryText, setQueryText] = useState(SUGGESTED_QUERIES[0]);
+  const [queryText, setQueryText] = useState("");
   const [selectedDept, setSelectedDept] = useState("ALL");
   const [minExperience, setMinExperience] = useState(0);
   const [threshold, setThreshold] = useState(0.45);
@@ -52,10 +52,6 @@ export default function MenteeExplorePage() {
                 setPendingMentorIds(ids);
               }
             });
-
-          // Pre-fill query with user's bio if available, but do NOT run search automatically
-          const initialBio = data.data.profile?.rawBio || SUGGESTED_QUERIES[0];
-          setQueryText(initialBio);
         }
       })
       .catch(() => {});
@@ -148,9 +144,53 @@ export default function MenteeExplorePage() {
       {/* Query & Filter Panel */}
       <div className="card" style={{ marginBottom: "1.75rem" }}>
         <div style={{ marginBottom: "1rem" }}>
-          <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "var(--color-navy)", marginBottom: "0.4rem" }}>
-            Search Query or Describe Your Learning Goals
-          </label>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+            <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-navy)" }}>
+              Search Query or Describe Your Learning Goals
+            </label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {currentUser?.profile?.rawBio && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const bio = currentUser.profile.rawBio;
+                    setQueryText(bio);
+                    runSemanticSearch(bio);
+                  }}
+                  style={{
+                    background: "var(--color-kq-red-light, #fef2f2)",
+                    color: "var(--color-kq-red, #c8102e)",
+                    border: "1px solid var(--color-kq-red-border, #fecaca)",
+                    borderRadius: "var(--radius-full)",
+                    padding: "0.2rem 0.65rem",
+                    fontSize: "0.74rem",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  📋 Use My Bio
+                </button>
+              )}
+              {queryText && (
+                <button
+                  type="button"
+                  onClick={() => setQueryText("")}
+                  style={{
+                    background: "#f1f5f9",
+                    color: "var(--color-text-muted)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "var(--radius-full)",
+                    padding: "0.2rem 0.55rem",
+                    fontSize: "0.74rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  ✕ Clear
+                </button>
+              )}
+            </div>
+          </div>
           <textarea
             rows={3}
             value={queryText}
@@ -161,8 +201,9 @@ export default function MenteeExplorePage() {
               borderRadius: "var(--radius-sm)",
               border: "1px solid var(--color-border)",
               lineHeight: 1.5,
+              fontSize: "0.92rem",
             }}
-            placeholder="e.g. Seeking mentorship from wide-body captains on B787 line training and ETOPS operations..."
+            placeholder="e.g. Seeking mentorship from wide-body captains on B787 line conversion, command upgrades, and ETOPS operations..."
           />
         </div>
 

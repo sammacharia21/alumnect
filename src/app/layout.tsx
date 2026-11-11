@@ -3,10 +3,11 @@ import Link from "next/link";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Alumnect | AI-Driven Aviation Mentorship Platform",
-  description: "Connect aviation students, first officers, and engineers with veteran captains, instructors, and specialists using SBERT semantic matching.",
+  title: "Alumnect | Kenya Airways Alumni Mentorship Platform",
+  description: "Connect aviation students, first officers, and engineers with veteran captains, instructors, and specialists through intelligent mentorship matching.",
 };
 
 export default function RootLayout({
@@ -16,9 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <Navbar />
-        <main className="main-layout">{children}</main>
+        <main className="main-layout" style={{ flex: 1 }}>{children}</main>
+        <Footer />
       </body>
     </html>
   );

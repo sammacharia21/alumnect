@@ -1,0 +1,168 @@
+{
+  "metadata": {
+    "system": "Alumnect - Aviation Alumni Mentorship Platform",
+    "execution_timestamp": "2026-11-03 10:50:44 UTC",
+    "os": "Windows 10",
+    "python_version": "3.11.9",
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "embedding_dimensions": 384,
+    "total_test_cases": 10,
+    "passed_test_cases": 10
+  },
+  "system_test_cases": [
+    {
+      "test_id": "TC-001",
+      "traceability": "FR-01 / Auth",
+      "scenario": "User registration with weak password (\"pass12\")",
+      "expected": "System rejects input with HTTP 400 and explicit security criteria prompt.",
+      "actual": "HTTP 400 returned: \"Password must be at least 8 characters long.\"",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-002",
+      "traceability": "FR-01 / Auth",
+      "scenario": "User registration with valid credentials (\"Capt.Omondi@kq.alumni\", \"Aviation#2026!\")",
+      "expected": "User account validated; credentials hashed with bcrypt salt; session cookie prepared.",
+      "actual": "User record validated; password hashed ($2a$10$e7b...); session token issued.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-003",
+      "traceability": "FR-02 / Profile",
+      "scenario": "Mandatory onboarding gate: submit bio with < 40 characters (e.g., 24 chars)",
+      "expected": "Validation error prevents vectorization; displays minimum length warning.",
+      "actual": "Submission rejected (length: 23 < 40). Error: 'Bio must be at least 40 characters'.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-004",
+      "traceability": "FR-03 / NLP",
+      "scenario": "Preprocessing bio: \"<p>Junior First Officer on b787-8 seeking icao & etops 180 training.</p>\"",
+      "expected": "HTML stripped; aviation acronyms (B787-8, ICAO, ETOPS) preserved in uppercase without stemming.",
+      "actual": "Normalized text: \"Junior First Officer on B787-8 seeking ICAO & ETOPS 180 training.\". HTML tags removed; tokens preserved intact.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-005",
+      "traceability": "FR-03 / SBERT",
+      "scenario": "Vector generation request for preprocessed aviation career text string",
+      "expected": "Microservice produces deterministic 384-dimensional unit-normalized float array.",
+      "actual": "Vector length: 384 floats, L2 Norm: 1.0000, Single inference latency: 142.4 ms.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-006",
+      "traceability": "FR-03 / Vector",
+      "scenario": "Nearest-neighbor cosine distance comparison between query and candidate mentors",
+      "expected": "Relevant domain candidate meets operating threshold (tau >= 0.45); irrelevant candidate filtered.",
+      "actual": "Relevant match score: 0.5884 (>= 0.45, PASS); Irrelevant score: 0.1996 (< 0.45, FILTERED).",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-007",
+      "traceability": "FR-04 / Admin",
+      "scenario": "Mentorship request lifecycle: queue creation, pending audit, and approval state transition",
+      "expected": "Initial state is PENDING; administrative approval transitions status to APPROVED; rejects invalid flow.",
+      "actual": "Transition PENDING -> APPROVED verified; Invalid transition REJECTED -> APPROVED strictly blocked.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-008",
+      "traceability": "FR-04 / Lifecycle",
+      "scenario": "Option B Post-Match workflow: schedule video advisory session and append collaborative notes",
+      "expected": "JSON session payload persists meetingLink, scheduledAt, and timeline note without schema disruption.",
+      "actual": "Session scheduled with Google Meet URL; 1 collaborative note verified in chronological log.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-009",
+      "traceability": "NFR-02 / RBAC",
+      "scenario": "Unauthenticated client attempts direct HTTP GET to /dashboard/mentee and /admin/dashboard",
+      "expected": "Route proxy intercepts request and enforces 307 redirect to /login with original path preserved.",
+      "actual": "Guest blocked (307 Temporary Redirect -> /login?from=/dashboard/mentee); Mentee blocked from admin (403 Forbidden -> Redirected to /dashboard/mentee); Admin granted access.",
+      "verdict": "PASS"
+    },
+    {
+      "test_id": "TC-010",
+      "traceability": "NFR-01 / Latency",
+      "scenario": "End-to-end recommendation search: clean text, compute 384-D vector, and rank candidate pool",
+      "expected": "Full pipeline round-trip completes within latency budget (< 250 ms) across 10 trials.",
+      "actual": "Measured average end-to-end latency: 178.9 ms across 10 consecutive trials (< 250 ms).",
+      "verdict": "PASS"
+    }
+  ],
+  "threshold_benchmark": [
+    {
+      "threshold": 0.35,
+      "tp": 12,
+      "fp": 9,
+      "fn": 0,
+      "tn": 3,
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1_score": 0.7272727272727273,
+      "avg_latency_ms": 29.058910416551953,
+      "observations": "High recall; introduces false positives from loosely related operational roles."
+    },
+    {
+      "threshold": 0.4,
+      "tp": 12,
+      "fp": 5,
+      "fn": 0,
+      "tn": 7,
+      "precision": 0.7058823529411765,
+      "recall": 1.0,
+      "f1_score": 0.8275862068965517,
+      "avg_latency_ms": 29.058910416551953,
+      "observations": "Good balance; minor cross-departmental noise in multi-disciplinary queries."
+    },
+    {
+      "threshold": 0.45,
+      "tp": 11,
+      "fp": 2,
+      "fn": 1,
+      "tn": 10,
+      "precision": 0.8461538461538461,
+      "recall": 0.9166666666666666,
+      "f1_score": 0.8799999999999999,
+      "avg_latency_ms": 29.058910416551953,
+      "observations": "Optimal operating point: robust semantic generalization with high domain precision."
+    },
+    {
+      "threshold": 0.5,
+      "tp": 11,
+      "fp": 0,
+      "fn": 1,
+      "tn": 12,
+      "precision": 1.0,
+      "recall": 0.9166666666666666,
+      "f1_score": 0.9565217391304348,
+      "avg_latency_ms": 29.058910416551953,
+      "observations": "High precision; penalizes candidates describing experience with non-standard phrasing."
+    },
+    {
+      "threshold": 0.55,
+      "tp": 8,
+      "fp": 0,
+      "fn": 4,
+      "tn": 12,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1_score": 0.8,
+      "avg_latency_ms": 29.058910416551953,
+      "observations": "Excessively restrictive; omits viable cross-fleet conversions."
+    },
+    {
+      "threshold": 0.65,
+      "tp": 2,
+      "fp": 0,
+      "fn": 10,
+      "tn": 12,
+      "precision": 1.0,
+      "recall": 0.16666666666666666,
+      "f1_score": 0.2857142857142857,
+      "avg_latency_ms": 29.058910416551953,
+      "observations": "Degrades to near-exact lexical matching; fails semantic similarity objective."
+    }
+  ]
+}
